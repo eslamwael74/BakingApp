@@ -12,7 +12,7 @@ public class Ingredient {
 
     @SerializedName("quantity")
     @Expose
-    int quantity;
+    String quantity;
 
     @SerializedName("measure")
     @Expose
@@ -22,7 +22,7 @@ public class Ingredient {
     @Expose
     String ingredient;
 
-    public int getQuantity() {
+    public String getQuantity() {
         return this.quantity;
     }
 
