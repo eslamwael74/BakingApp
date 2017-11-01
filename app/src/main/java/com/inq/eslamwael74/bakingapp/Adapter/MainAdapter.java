@@ -3,6 +3,7 @@ package com.inq.eslamwael74.bakingapp.Adapter;
 
 
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.R;
+import com.inq.eslamwael74.bakingapp.RecipeFragment;
 
 import java.util.ArrayList;
 
@@ -41,16 +43,28 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
 
         holder.textView.setText(recipes.get(position).getName());
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getFragmentAppDetails(recipes.get(position));
                 Toast.makeText(fragmentActivity, "HelloFromMyWorld!!", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+
+    private void getFragmentAppDetails(Recipe recipe) {
+
+        RecipeFragment recipeFragment = RecipeFragment.newInstance(recipe);
+        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, recipeFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+
 
     }
 

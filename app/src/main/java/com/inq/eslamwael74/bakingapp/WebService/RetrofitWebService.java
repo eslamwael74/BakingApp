@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitWebService {
     private static final String TAG = RetrofitWebService.class.getSimpleName();
     private static final Map<String, RetrofitService> mServices = new HashMap<>();
-//    public static final String url = "http://youcook.4art-studio.com/";
+
     public static final String url = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
     private RetrofitWebService() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
