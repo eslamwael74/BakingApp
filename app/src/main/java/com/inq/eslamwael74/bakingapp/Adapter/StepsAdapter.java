@@ -1,6 +1,11 @@
 package com.inq.eslamwael74.bakingapp.Adapter;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,9 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.inq.eslamwael74.bakingapp.Activity.RecipeActivity;
+import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
+import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
+import com.inq.eslamwael74.bakingapp.UtilClass;
 
 import java.util.ArrayList;
 
@@ -43,7 +52,32 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(StepsAdapter.MyViewHolder holder, int position) {
 
-        holder.tvDesc.setText(steps.get(position).getDescription());
+        holder.tvDesc.setText(steps.get(position).getShortDescription());
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentAppDetails(steps,steps.get(position).getId());
+            }
+        });
+
+    }
+
+    private void getFragmentAppDetails(ArrayList<Step> steps,int id) {
+
+
+
+            Fragment fragment = new RecipeDetailsFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("steps",steps);
+            bundle.putInt("id",id);
+            fragment.setArguments(bundle);
+
+
+            FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame2, fragment);
+            transaction.commit();
+
 
 
 

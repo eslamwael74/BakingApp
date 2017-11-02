@@ -1,4 +1,4 @@
-package com.inq.eslamwael74.bakingapp;
+package com.inq.eslamwael74.bakingapp.Fragment;
 
 
 import android.os.Bundle;
@@ -11,14 +11,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.inq.eslamwael74.bakingapp.Adapter.IngredientAdapter;
 import com.inq.eslamwael74.bakingapp.Adapter.StepsAdapter;
 import com.inq.eslamwael74.bakingapp.Model.Ingredient;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
+import com.inq.eslamwael74.bakingapp.R;
+import com.inq.eslamwael74.bakingapp.UtilClass;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -38,6 +40,9 @@ public class RecipeFragment extends Fragment {
     @BindView(R.id.recylerview)
     RecyclerView recyclerView;
 
+    @BindView(R.id.tv_name)
+    TextView tvName;
+
     @BindView(R.id.recylerview_steps)
     RecyclerView recyclerViewSteps;
 
@@ -54,7 +59,7 @@ public class RecipeFragment extends Fragment {
     public static RecipeFragment newInstance(Recipe recipe) {
         RecipeFragment mAppDetailsFragment = new RecipeFragment();
         Bundle args = new Bundle();
-        args.putParcelable("recipe", recipe);
+//        args.putParcelable("recipe", recipe);
         mAppDetailsFragment.setArguments(args);
         return mAppDetailsFragment;
     }
@@ -64,13 +69,23 @@ public class RecipeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_list_recipe, container, false);
         ButterKnife.bind(this, view);
 
 
         if (savedInstanceState == null) {
 
-            recipe = getArguments().getParcelable("recipe");
+            if(!UtilClass.isTablet(getContext())){
+                recipe = getActivity().getIntent().getExtras().getParcelable("recipe");
+            }
+            else{
+//                recipe = getActivity().getIntent().getExtras().getParcelable("recipe");
+
+                recipe = getArguments().getParcelable("recipe");
+            }
+
+
+            tvName.setText(recipe.getName());
 
             ingredients = recipe.getIngredients();
             steps = recipe.getSteps();

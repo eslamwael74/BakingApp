@@ -5,4 +5,7 @@
     <string name="measure">Measure: </string>
     <string name="ingredient">Ingredient: </string>
     <string name="steps">Steps</string>
+    <string name="pervious">PERVIOUS</string>
+    <string name="next">NEXT</string>
+    <string name="video_not_available">Sorry Video Not Available!!</string>
 </resources>
