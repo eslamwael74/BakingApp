@@ -2,7 +2,6 @@ package com.inq.eslamwael74.bakingapp.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import com.inq.eslamwael74.bakingapp.Adapter.MainAdapter;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.R;
-import com.inq.eslamwael74.bakingapp.UtilClass;
 import com.inq.eslamwael74.bakingapp.WebService.RetrofitWebService;
 
 import org.json.JSONArray;
@@ -45,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null){
 
             getWebService();
 
         }
+
 
 
     }
@@ -67,22 +66,14 @@ public class MainActivity extends AppCompatActivity {
                 recipes = response.body();
                 Log.d(TAG, "onResponse: " + recipes.size());
                 mainAdapter = new MainAdapter(MainActivity.this, recipes);
-
-                if (!UtilClass.getUtilClass().isTablet(MainActivity.this)) {
-                    LinearLayoutManager manager = new LinearLayoutManager(MainActivity.this);
-                    recyclerView.setLayoutManager(manager);
-                    recyclerView.setAdapter(mainAdapter);
-                } else {
-                    GridLayoutManager manager = new GridLayoutManager(MainActivity.this, 3);
-                    recyclerView.setLayoutManager(manager);
-                    recyclerView.setAdapter(mainAdapter);
-                }
-
+                LinearLayoutManager manager = new LinearLayoutManager(MainActivity.this);
+                recyclerView.setLayoutManager(manager);
+                recyclerView.setAdapter(mainAdapter);
             }
 
             @Override
             public void onFailure(Call<ArrayList<Recipe>> call, Throwable t) {
-                UtilClass.getUtilClass().onFail(MainActivity.this);
+
             }
         });
 

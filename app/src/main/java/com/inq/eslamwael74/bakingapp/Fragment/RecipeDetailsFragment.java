@@ -47,7 +47,6 @@ import com.inq.eslamwael74.bakingapp.Model.Ingredient;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
-import com.inq.eslamwael74.bakingapp.UtilClass;
 
 import java.util.ArrayList;
 
@@ -84,7 +83,7 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @OnClick(R.id.lin_next)
     void clickNext() {
 
-        if (id == steps.size() - 1) {
+        if (id == steps.size() - 1){
             return;
         }
         id++;
@@ -111,7 +110,7 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @OnClick(R.id.lin_perv)
     void clickPerv() {
 
-        if (id == 0) {
+        if (id == 0){
             return;
         }
         id--;
@@ -137,14 +136,13 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     SimpleExoPlayer player;
     Step step;
     int id;
-    Recipe recipe;
 
 
     public static RecipeDetailsFragment newInstance(ArrayList<Step> steps, int id) {
         RecipeDetailsFragment mAppDetailsFragment = new RecipeDetailsFragment();
         Bundle args = new Bundle();
-//        args.putParcelableArrayList("steps", steps);
-//        args.putInt("id", id);
+        args.putParcelableArrayList("steps", steps);
+        args.putInt("id", id);
         mAppDetailsFragment.setArguments(args);
         return mAppDetailsFragment;
     }
@@ -157,19 +155,8 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
         View view = inflater.inflate(R.layout.fragment_recipe_details, container, false);
         ButterKnife.bind(this, view);
 
-        if (!UtilClass.isTablet(getContext())) {
-            steps = getActivity().getIntent().getExtras().getParcelableArrayList("steps");
-            id = getActivity().getIntent().getExtras().getInt("id");
-
-        } else {
-//            steps = getActivity().getIntent().getExtras().getParcelableArrayList("steps");
-//            id = getActivity().getIntent().getExtras().getInt("id");
-
-            steps = getArguments().getParcelableArrayList("steps");
-            recipe = getArguments().getParcelable("recipe");
-            id = getArguments().getInt("id");
-        }
-
+        steps = getArguments().getParcelableArrayList("steps");
+        id = getArguments().getInt("id");
 
         for (int i = 0; i < steps.size(); i++) {
 

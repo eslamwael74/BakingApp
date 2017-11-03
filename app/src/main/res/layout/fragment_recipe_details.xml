@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/details"
     android:background="@color/white"
     android:clickable="true"
     android:focusable="true">
@@ -27,7 +26,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layoutDirection="ltr">
+                android:layoutDirection="ltr"
+                >
 
                 <TextView
                     android:id="@+id/tv_step_intro"
@@ -47,8 +47,9 @@
                     android:id="@+id/back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_right_white_24dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_arrow_right_white_24dp" />
+                    />
 
 
             </RelativeLayout>
@@ -60,15 +61,17 @@
             android:id="@+id/rel_placeholder"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:visibility="gone"
             android:background="@color/grey_white"
             android:gravity="center"
-            android:visibility="gone">
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/video_not_available"
-                android:textColor="@color/blue_splash" />
+                android:textColor="@color/blue_splash"
+                />
 
         </RelativeLayout>
 
@@ -90,7 +93,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="12dp"
-                app:cardElevation="4dp"
                 app:layout_constraintBottom_toTopOf="@+id/rel_btns"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,9 +104,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
-                    android:gravity="center"
-                    android:textColor="@color/dark_grey"
                     android:textSize="16sp"
+                    android:textColor="@color/dark_grey"
+                    android:gravity="center"
                     tools:text="step Description" />
 
 

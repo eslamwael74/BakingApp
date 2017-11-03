@@ -44,29 +44,11 @@ public class Recipe implements Parcelable {
     private
     String image;
 
-
     protected Recipe(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        ingredients = in.createTypedArrayList(Ingredient.CREATOR);
-        steps = in.createTypedArrayList(Step.CREATOR);
         servings = in.readInt();
         image = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(name);
-        dest.writeTypedList(ingredients);
-        dest.writeTypedList(steps);
-        dest.writeInt(servings);
-        dest.writeString(image);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
     }
 
     public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
@@ -105,7 +87,16 @@ public class Recipe implements Parcelable {
         return this.image;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-
-
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeInt(servings);
+        parcel.writeString(image);
+    }
 }

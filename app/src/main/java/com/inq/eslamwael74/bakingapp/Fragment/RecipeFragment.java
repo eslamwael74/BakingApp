@@ -19,7 +19,6 @@ import com.inq.eslamwael74.bakingapp.Model.Ingredient;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
-import com.inq.eslamwael74.bakingapp.UtilClass;
 
 import java.util.ArrayList;
 
@@ -59,7 +58,7 @@ public class RecipeFragment extends Fragment {
     public static RecipeFragment newInstance(Recipe recipe) {
         RecipeFragment mAppDetailsFragment = new RecipeFragment();
         Bundle args = new Bundle();
-//        args.putParcelable("recipe", recipe);
+        args.putParcelable("recipe", recipe);
         mAppDetailsFragment.setArguments(args);
         return mAppDetailsFragment;
     }
@@ -75,15 +74,7 @@ public class RecipeFragment extends Fragment {
 
         if (savedInstanceState == null) {
 
-            if(!UtilClass.isTablet(getContext())){
-                recipe = getActivity().getIntent().getExtras().getParcelable("recipe");
-            }
-            else{
-//                recipe = getActivity().getIntent().getExtras().getParcelable("recipe");
-
-                recipe = getArguments().getParcelable("recipe");
-            }
-
+            recipe = getArguments().getParcelable("recipe");
 
             tvName.setText(recipe.getName());
 
