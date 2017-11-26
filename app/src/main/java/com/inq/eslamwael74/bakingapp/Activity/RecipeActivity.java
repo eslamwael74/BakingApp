@@ -10,11 +10,10 @@ import android.widget.Toast;
 
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
-import com.inq.eslamwael74.bakingapp.OnStepSelectionChangeListener;
 import com.inq.eslamwael74.bakingapp.R;
 import com.inq.eslamwael74.bakingapp.UtilClass;
 
-public class RecipeActivity extends AppCompatActivity implements OnStepSelectionChangeListener {
+public class RecipeActivity extends AppCompatActivity {
 
     Context context = this;
 
@@ -25,26 +24,25 @@ public class RecipeActivity extends AppCompatActivity implements OnStepSelection
         setContentView(R.layout.activity_main_tap);
 
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
 
-            if (!UtilClass.isTablet(this)){
+            if (!UtilClass.isTablet(this)) {
                 Fragment listFragment = new RecipeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame,listFragment);
+                fragmentTransaction.replace(R.id.frame, listFragment);
                 fragmentTransaction.commit();
-            }
-            else{
+            } else {
                 Fragment listFragment = new RecipeFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.frame1,listFragment);
+                fragmentTransaction.replace(R.id.frame1, listFragment);
                 fragmentTransaction.commit();
 
                 Fragment DetailFragment = new RecipeDetailsFragment();
                 FragmentManager detailManager = getSupportFragmentManager();
                 FragmentTransaction DetailTransaction = detailManager.beginTransaction();
-                DetailTransaction.add(R.id.frame2,DetailFragment);
+                DetailTransaction.add(R.id.frame2, DetailFragment);
                 DetailTransaction.commit();
             }
 
@@ -52,15 +50,8 @@ public class RecipeActivity extends AppCompatActivity implements OnStepSelection
         }
 
 
-
-
-
     }
 
-    @Override
-    public void OnSelectionChanged(int position) {
-
-    }
     @Override
     protected void onStart() {
         super.onStart();
