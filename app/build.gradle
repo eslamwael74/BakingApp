@@ -28,7 +28,7 @@ android {
             universalApk true
         }
     }
-    defaultConfig.applicationId="com.inq.eslamwael74.bakingapp"
+    defaultConfig.applicationId = "com.inq.eslamwael74.bakingapp"
 }
 
 dependencies {

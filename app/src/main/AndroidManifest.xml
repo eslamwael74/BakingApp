@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".Activity.RecipeActivity" />-->
+        <!-- <activity android:name=".Activity.RecipeActivity" /> -->
 
         <receiver android:name=".BakingWidgetProvider">
             <intent-filter>
@@ -30,6 +30,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_widget_provider_info" />
         </receiver>
+
+        <activity android:name=".Activity.RecipeActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,8 @@ package com.inq.eslamwael74.bakingapp.Adapter;
 
 
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
@@ -12,9 +14,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.inq.eslamwael74.bakingapp.Activity.RecipeActivity;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
+import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
+import com.inq.eslamwael74.bakingapp.UtilClass;
 
 import java.util.ArrayList;
 
@@ -50,11 +55,30 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentAppDetails(recipes.get(position));
-                Toast.makeText(fragmentActivity, "HelloFromMyWorld!!", Toast.LENGTH_SHORT).show();
+                getRecipeActivity(recipes.get(position), recipes.get(position).getSteps(), recipes.get(position).getSteps().get(position).getId());
+//                getFragmentAppDetails(recipes.get(position));
+//                Toast.makeText(fragmentActivity, "HelloFromMyWorld!!", Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void getRecipeActivity(Recipe recipe, ArrayList<Step> steps, int id) {
+
+        if (!UtilClass.isTablet(fragmentActivity)) {
+
+            Intent intent = new Intent(fragmentActivity, RecipeActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("recipe", recipe);
+            bundle.putParcelableArrayList("steps", steps);
+            bundle.putInt("id", id);
+            intent.putExtras(bundle);
+            fragmentActivity.startActivity(intent);
+
+        }
+        else{
+            getFragmentAppDetails(recipe);
+        }
     }
 
     private void getFragmentAppDetails(Recipe recipe) {
@@ -64,7 +88,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
         transaction.replace(R.id.frame, recipeFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
 
     }
 

@@ -48,6 +48,15 @@ public class Step implements Parcelable {
         thumbnailURL = in.readString();
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(shortDescription);
+        dest.writeString(description);
+        dest.writeString(videoURL);
+        dest.writeString(thumbnailURL);
+    }
+
     public static final Creator<Step> CREATOR = new Creator<Step>() {
         @Override
         public Step createFromParcel(Parcel in) {
@@ -85,12 +94,5 @@ public class Step implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(shortDescription);
-        parcel.writeString(description);
-        parcel.writeString(videoURL);
-        parcel.writeString(thumbnailURL);
-    }
+
 }

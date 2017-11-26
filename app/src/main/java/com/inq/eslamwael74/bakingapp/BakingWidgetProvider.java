@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
+import com.inq.eslamwael74.bakingapp.Activity.RecipeActivity;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 
 /**
@@ -15,15 +16,30 @@ import com.inq.eslamwael74.bakingapp.Model.Recipe;
 public class BakingWidgetProvider extends AppWidgetProvider {
 
     public static Recipe recipe;
+    Context context;
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
+//        CharSequence widgetText = context.getString(R.string.appwidget_text);
         // Get the layout for the App Widget and attach an on-click listener
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        Intent intent = new Intent(context, RecipeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.list_view,pendingIntent);
+
+
+        Intent intent1 = new Intent(context,ListViewWidgetService.class);
+        views.setRemoteAdapter(R.id.list_view, intent);
+
+
+//        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
 
         // Tell the AppWidgetManager to perform an update on the current app widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
@@ -46,5 +62,12 @@ public class BakingWidgetProvider extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+    }
+
+
 }
 

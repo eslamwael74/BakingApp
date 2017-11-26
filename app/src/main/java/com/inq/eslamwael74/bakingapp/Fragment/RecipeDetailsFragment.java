@@ -83,7 +83,7 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @OnClick(R.id.lin_next)
     void clickNext() {
 
-        if (id == steps.size() - 1){
+        if (id == steps.size() - 1) {
             return;
         }
         id++;
@@ -110,7 +110,7 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @OnClick(R.id.lin_perv)
     void clickPerv() {
 
-        if (id == 0){
+        if (id == 0) {
             return;
         }
         id--;
