@@ -7,28 +7,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.inq.eslamwael74.bakingapp.Activity.MainActivity;
+import com.inq.eslamwael74.bakingapp.Model.Recipe;
 
 /**
  * Implementation of App Widget functionality.
  */
 public class BakingWidgetProvider extends AppWidgetProvider {
 
+    public static Recipe recipe;
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
         CharSequence widgetText = context.getString(R.string.appwidget_text);
+        // Get the layout for the App Widget and attach an on-click listener
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baking_widget_provider);
         views.setTextViewText(R.id.appwidget_text, widgetText);
 
-
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,0);
-
-        views.setOnClickPendingIntent(R.id.appwidget_text,pendingIntent);
-
-        // Instruct the widget manager to update the widget
+        // Tell the AppWidgetManager to perform an update on the current app widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
