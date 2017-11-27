@@ -96,6 +96,7 @@ public class RecipeFragment extends Fragment {
         } else {
 
             recipe = savedInstanceState.getParcelable("recipe");
+            tvName.setText(recipe.getName());
 
             ingredients = (ArrayList<Ingredient>) savedInstanceState.getSerializable("listIng");
             getIngredients(ingredients);

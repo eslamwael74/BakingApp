@@ -17,7 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -47,6 +49,7 @@ import com.inq.eslamwael74.bakingapp.Model.Ingredient;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,6 +62,7 @@ import butterknife.OnClick;
  */
 
 public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventListener {
+    int type = 0;
 
     @BindView(R.id.back)
     ImageView imgBck;
@@ -80,8 +84,15 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @BindView(R.id.lin_next)
     LinearLayout linNext;
 
+    @BindView(R.id.img)
+    ImageView imageView;
+
     @OnClick(R.id.lin_next)
     void clickNext() {
+
+        position = C.TIME_UNSET;
+//        stopExo();
+
 
         if (id == steps.size() - 1) {
             return;
@@ -91,11 +102,14 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
 
             if (id == steps.get(i).getId()) {
 
-                player.setPlayWhenReady(false);
+                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL(),steps.get(i).getThumbnailURL());
 
-                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL());
+                if (!step.getVideoURL().equals(""))
+                    type = 0;
+                else
+                    type = 1;
 
-                getStep(step);
+                getStep(step, type);
 
 
             }
@@ -110,6 +124,10 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     @OnClick(R.id.lin_perv)
     void clickPerv() {
 
+        position = C.TIME_UNSET;
+//        stopExo();
+
+
         if (id == 0) {
             return;
         }
@@ -118,11 +136,14 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
 
             if (id == steps.get(i).getId()) {
 
-                player.setPlayWhenReady(false);
+                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL(),steps.get(i).getThumbnailURL());
 
-                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL());
+                if (!step.getVideoURL().equals(""))
+                    type = 0;
+                else
+                    type = 1;
 
-                getStep(step);
+                getStep(step, type);
 
             }
         }
@@ -136,7 +157,9 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
     SimpleExoPlayer player;
     Step step;
     int id;
-
+    long position = C.TIME_UNSET;
+    Uri videoUri;
+    String PLAYER_POSITION_KEY = "playerPosition";
 
     public static RecipeDetailsFragment newInstance(ArrayList<Step> steps, int id) {
         RecipeDetailsFragment mAppDetailsFragment = new RecipeDetailsFragment();
@@ -156,41 +179,76 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
         ButterKnife.bind(this, view);
 
         steps = getArguments().getParcelableArrayList("steps");
-        id = getArguments().getInt("id");
 
-        for (int i = 0; i < steps.size(); i++) {
+        if (savedInstanceState != null) {
+            position = savedInstanceState.getLong(PLAYER_POSITION_KEY, C.TIME_UNSET);
+            id = savedInstanceState.getInt("idr", 1);
 
-            if (id == steps.get(i).getId()) {
+            getStep(id);
+        } else {
 
-                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL());
+            id = getArguments().getInt("id");
 
-                getStep(step);
+            getStep(id);
 
-
-            }
         }
 
         return view;
     }
 
-    public void getStep(Step step) {
+    void getStep(int id) {
+
+        for (int i = 0; i < steps.size(); i++) {
+
+            if (id == steps.get(i).getId()) {
+
+                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL(),steps.get(i).getThumbnailURL());
+
+//                Toast.makeText(getActivity(), "VideoURL" + step.getVideoURL(), Toast.LENGTH_SHORT).show();
+
+                if (!step.getVideoURL().equals(""))
+                    type = 0;
+                else
+                    type = 1;
+
+                getStep(step, type);
+
+
+            }
+        }
+
+    }
+
+
+    public void getStep(Step step, int type) {
+
+        if (step.getThumbnailURL() == null){
+            Picasso.with(getActivity())
+                    .load(step.getThumbnailURL())
+                    .placeholder(R.drawable.android_placeholder)
+                    .error(R.drawable.android_placeholder)
+                    .into(imageView);
+        }
 
         tvStepName.setText(step.getShortDescription());
         tvStep.setText(step.getDescription());
 
-        if (step.getVideoURL() != "") {
+        if (type == 0) {
+            videoUri = Uri.parse(step.getVideoURL());
             relPlaceHolder.setVisibility(View.GONE);
             simpleExoPlayer.setVisibility(View.VISIBLE);
-            setupExo(step.getVideoURL());
+            setupExo(videoUri);
         } else {
             relPlaceHolder.setVisibility(View.VISIBLE);
             simpleExoPlayer.setVisibility(View.GONE);
         }
+        type = 0;
+        this.type = 0;
+        this.step = null;
     }
 
 
-    public void setupExo(String videoUrl) {
-
+    public void setupExo(Uri videoUri) {
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -210,28 +268,48 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
 
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
-        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(videoUrl),
+        MediaSource videoSource = new ExtractorMediaSource(videoUri,
                 dataSourceFactory, extractorsFactory, null, null);
+
+        if (position != C.TIME_UNSET) {
+            player.seekTo(position);
+        }
 
         player.addListener(this);
         player.prepare(videoSource);
         simpleExoPlayer.requestFocus();
         player.setPlayWhenReady(true);      //play video when ready
 
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
         if (player != null) {
+            position = player.getCurrentPosition();
+            stopExo();
+        }
+
+    }
+
+    void stopExo() {
+        if (player != null) {
+
+            player.stop();
+            player.release();
             player.setPlayWhenReady(false); //pause a video
+            player = null;
+
         }
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        player.release();
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(PLAYER_POSITION_KEY, position);
+        outState.putInt("idr", id);
     }
 
     @Override
