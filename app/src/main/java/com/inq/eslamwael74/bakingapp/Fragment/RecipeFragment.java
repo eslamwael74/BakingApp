@@ -19,6 +19,7 @@ import com.inq.eslamwael74.bakingapp.Model.Ingredient;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
+import com.inq.eslamwael74.bakingapp.StepSelect;
 import com.inq.eslamwael74.bakingapp.UtilClass;
 
 import java.util.ArrayList;
@@ -176,8 +177,5 @@ public class RecipeFragment extends Fragment {
         if (stepsState != null) {
             recyclerViewSteps.getLayoutManager().onRestoreInstanceState(stepsState);
         }
-
     }
-
-
 }
