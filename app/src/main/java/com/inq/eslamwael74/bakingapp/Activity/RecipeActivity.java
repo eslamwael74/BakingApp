@@ -10,10 +10,11 @@ import android.widget.Toast;
 
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
+import com.inq.eslamwael74.bakingapp.StepSelect;
 import com.inq.eslamwael74.bakingapp.R;
 import com.inq.eslamwael74.bakingapp.UtilClass;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements StepSelect {
 
     Context context = this;
 
@@ -56,5 +57,10 @@ public class RecipeActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Toast.makeText(context, "I am RecipeActivity", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStepSelect(int id) {
+        Toast.makeText(context, "" + id, Toast.LENGTH_SHORT).show();
     }
 }

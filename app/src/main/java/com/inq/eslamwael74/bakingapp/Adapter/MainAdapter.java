@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
 import com.inq.eslamwael74.bakingapp.UtilClass;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,15 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
+
+        if (!recipes.get(position).getImage().equals("")){
+            Picasso.with(fragmentActivity)
+                    .load(recipes.get(position).getImage())
+                    .placeholder(R.drawable.android_placeholder)
+                    .error(R.drawable.android_placeholder)
+                    .into(holder.imageView);
+        }
+
 
         holder.textView.setText(recipes.get(position).getName());
 
@@ -103,6 +114,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
         @BindView(R.id.card)
         CardView cardView;
+
+        @BindView(R.id.img)
+        ImageView imageView;
 
 
 

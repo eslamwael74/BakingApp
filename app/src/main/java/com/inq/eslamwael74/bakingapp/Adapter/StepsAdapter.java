@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
 import com.inq.eslamwael74.bakingapp.R;
+import com.inq.eslamwael74.bakingapp.StepSelect;
 
 import java.util.ArrayList;
 
@@ -24,16 +26,19 @@ import butterknife.ButterKnife;
  * Created by eslamwael74 on 01/11/17.
  */
 
-public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder> {
+public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder>  {
 
     FragmentActivity fragmentActivity;
 
     ArrayList<Step> steps;
 
+    private StepSelect stepSelect;
+
 
     public StepsAdapter(FragmentActivity fragmentActivity, ArrayList<Step> steps) {
         this.fragmentActivity = fragmentActivity;
         this.steps = steps;
+        this.stepSelect = (StepSelect) fragmentActivity;
     }
 
     @Override
@@ -51,7 +56,9 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentAppDetails(steps,steps.get(position).getId());
+//                getFragmentAppDetails(steps,steps.get(position).getId());
+                stepSelect.onStepSelect(steps.get(position).getId());
+//                Toast.makeText(fragmentActivity, "" + steps.get(position).getId(), Toast.LENGTH_SHORT).show();
             }
         });
 
