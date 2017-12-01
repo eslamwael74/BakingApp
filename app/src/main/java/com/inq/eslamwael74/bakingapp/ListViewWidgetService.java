@@ -19,7 +19,7 @@ public class ListViewWidgetService extends RemoteViewsService {
 
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
-        return null;
+        return new ListRemoteViewFactory(this.getApplicationContext(),intent);
     }
 
 
@@ -27,7 +27,7 @@ public class ListViewWidgetService extends RemoteViewsService {
 
         Context context;
 
-        public ListRemoteViewFactory(Context context) {
+        public ListRemoteViewFactory(Context context,Intent intent) {
             this.context = context;
         }
 

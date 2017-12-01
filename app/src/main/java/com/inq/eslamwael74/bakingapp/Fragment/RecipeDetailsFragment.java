@@ -204,7 +204,6 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
 
                 step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL(),steps.get(i).getThumbnailURL());
 
-//                Toast.makeText(getActivity(), "VideoURL" + step.getVideoURL(), Toast.LENGTH_SHORT).show();
 
                 if (!step.getVideoURL().equals(""))
                     type = 0;
@@ -213,10 +212,8 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
 
                 getStep(step, type);
 
-
             }
         }
-
     }
 
 
@@ -291,7 +288,6 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
             position = player.getCurrentPosition();
             stopExo();
         }
-
     }
 
     void stopExo() {
@@ -301,7 +297,6 @@ public class RecipeDetailsFragment extends Fragment implements ExoPlayer.EventLi
             player.release();
             player.setPlayWhenReady(false); //pause a video
             player = null;
-
         }
     }
 

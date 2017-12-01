@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/BakingApp.iml" filepath="$PROJECT_DIR$/.idea/BakingApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BakingApp.iml" filepath="$PROJECT_DIR$/BakingApp.iml" />
       <module fileurl="file://C:\Users\eslam\StudioProjects\BakingApp\BakingApp.iml" filepath="C:\Users\eslam\StudioProjects\BakingApp\BakingApp.iml" />
+      <module fileurl="file://D:\Computer Science\Android NanoDegree\BakingApp\.idea\BakingApp.iml" filepath="D:\Computer Science\Android NanoDegree\BakingApp\.idea\BakingApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

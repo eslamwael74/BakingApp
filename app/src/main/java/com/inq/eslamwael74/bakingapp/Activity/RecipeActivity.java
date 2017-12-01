@@ -9,21 +9,28 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
+import com.inq.eslamwael74.bakingapp.Model.Recipe;
+import com.inq.eslamwael74.bakingapp.Model.Step;
+import com.inq.eslamwael74.bakingapp.setOnStepSelectListener;
+
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
-import com.inq.eslamwael74.bakingapp.StepSelect;
 import com.inq.eslamwael74.bakingapp.R;
 import com.inq.eslamwael74.bakingapp.UtilClass;
 
-public class RecipeActivity extends AppCompatActivity implements StepSelect {
+import java.util.ArrayList;
+
+public class RecipeActivity extends AppCompatActivity implements setOnStepSelectListener {
 
     Context context = this;
 
+    Recipe recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tap);
 
+        recipe = getIntent().getExtras().getParcelable("recipe");
 
         if (savedInstanceState == null) {
 
@@ -34,17 +41,19 @@ public class RecipeActivity extends AppCompatActivity implements StepSelect {
                 fragmentTransaction.replace(R.id.frame, listFragment);
                 fragmentTransaction.commit();
             } else {
-                Fragment listFragment = new RecipeFragment();
+                RecipeFragment listFragment = RecipeFragment.newInstance(recipe);
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.frame1, listFragment);
                 fragmentTransaction.commit();
 
-                Fragment DetailFragment = new RecipeDetailsFragment();
+                Fragment DetailFragment = RecipeDetailsFragment.newInstance(recipe.getSteps(),0);
                 FragmentManager detailManager = getSupportFragmentManager();
                 FragmentTransaction DetailTransaction = detailManager.beginTransaction();
-                DetailTransaction.add(R.id.frame2, DetailFragment);
+                DetailTransaction.replace(R.id.frame2, DetailFragment);
                 DetailTransaction.commit();
+
+
             }
 
 
@@ -54,13 +63,26 @@ public class RecipeActivity extends AppCompatActivity implements StepSelect {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        Toast.makeText(context, "I am RecipeActivity", Toast.LENGTH_LONG).show();
-    }
+    public void onStepSelect(ArrayList<Step> steps, int id) {
 
-    @Override
-    public void onStepSelect(int id) {
-        Toast.makeText(context, "" + id, Toast.LENGTH_SHORT).show();
+        Step step;
+
+        for (int i = 0; i < steps.size(); i++) {
+
+            if (id == steps.get(i).getId()) {
+
+                step = new Step(id, steps.get(i).getShortDescription(), steps.get(i).getDescription(), steps.get(i).getVideoURL(), steps.get(i).getThumbnailURL());
+
+                Toast.makeText(context, "" + id + step.getShortDescription(), Toast.LENGTH_SHORT).show();
+
+
+            }
+        }
+        Fragment DetailFragment = RecipeDetailsFragment.newInstance(recipe.getSteps(),id);
+        FragmentManager detailManager = getSupportFragmentManager();
+        FragmentTransaction DetailTransaction = detailManager.beginTransaction();
+        DetailTransaction.replace(R.id.frame2, DetailFragment);
+        DetailTransaction.commit();
+
     }
 }

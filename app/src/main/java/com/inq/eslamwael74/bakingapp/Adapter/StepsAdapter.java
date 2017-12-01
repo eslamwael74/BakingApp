@@ -14,8 +14,9 @@ import com.inq.eslamwael74.bakingapp.Fragment.RecipeDetailsFragment;
 import com.inq.eslamwael74.bakingapp.Fragment.RecipeFragment;
 import com.inq.eslamwael74.bakingapp.Model.Recipe;
 import com.inq.eslamwael74.bakingapp.Model.Step;
+import com.inq.eslamwael74.bakingapp.UtilClass;
+import com.inq.eslamwael74.bakingapp.setOnStepSelectListener;
 import com.inq.eslamwael74.bakingapp.R;
-import com.inq.eslamwael74.bakingapp.StepSelect;
 
 import java.util.ArrayList;
 
@@ -32,13 +33,12 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
 
     ArrayList<Step> steps;
 
-    private StepSelect stepSelect;
-
+    setOnStepSelectListener setOnStepSelectListener;
 
     public StepsAdapter(FragmentActivity fragmentActivity, ArrayList<Step> steps) {
         this.fragmentActivity = fragmentActivity;
         this.steps = steps;
-        this.stepSelect = (StepSelect) fragmentActivity;
+        this.setOnStepSelectListener = (setOnStepSelectListener) fragmentActivity;
     }
 
     @Override
@@ -56,9 +56,14 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                getFragmentAppDetails(steps,steps.get(position).getId());
-                stepSelect.onStepSelect(steps.get(position).getId());
-//                Toast.makeText(fragmentActivity, "" + steps.get(position).getId(), Toast.LENGTH_SHORT).show();
+
+                if (UtilClass.isTablet(fragmentActivity)){
+                    setOnStepSelectListener.onStepSelect(steps,steps.get(position).getId());
+                }
+                else{
+                    getFragmentAppDetails(steps,steps.get(position).getId());
+                }
+
             }
         });
 

@@ -29,7 +29,7 @@ public class BakingService extends IntentService {
 
         Intent intent = new Intent(context, BakingService.class);
         intent.putExtra(INGREDIENTS_ACTIVITY, recipe);
-        context.startActivity(intent);
+        context.startService(intent);
 
     }
 

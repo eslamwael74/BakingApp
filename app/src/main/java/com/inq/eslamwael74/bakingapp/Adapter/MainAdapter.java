@@ -76,7 +76,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
 
     private void getRecipeActivity(Recipe recipe, ArrayList<Step> steps, int id) {
 
-        if (!UtilClass.isTablet(fragmentActivity)) {
+//        if (!UtilClass.isTablet(fragmentActivity)) {
 
             Intent intent = new Intent(fragmentActivity, RecipeActivity.class);
             Bundle bundle = new Bundle();
@@ -86,10 +86,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MyViewHolder> 
             intent.putExtras(bundle);
             fragmentActivity.startActivity(intent);
 
-        }
-        else{
-            getFragmentAppDetails(recipe);
-        }
+//        }
+//        else{
+//            getFragmentAppDetails(recipe);
+//        }
     }
 
     private void getFragmentAppDetails(Recipe recipe) {
